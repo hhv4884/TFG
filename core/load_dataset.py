@@ -53,7 +53,7 @@ def load_fashion_mnist(batch_size=128, classes = [0,1,2,3,4,5,6,7,8,9]):
     test_loader = torch.utils.data.DataLoader(dataset=clean_test_dataset, batch_size=batch_size, shuffle=False)
     return train_loader, test_loader
 
-def load_base(task, n_samples, cluster_number=None, noise=0.0, batch_size=128, n_features=2, class_sep=1.0):
+def load_base(task, n_samples, class_sep, cluster_number=None, noise=0.0, batch_size=128, n_features=2):
 
     if task == "linear":
         x, y = make_blobs(
@@ -80,8 +80,7 @@ def load_base(task, n_samples, cluster_number=None, noise=0.0, batch_size=128, n
             n_samples=n_samples,
             n_features=n_features,
             class_sep=class_sep,
-            # PARA EL CASO DE 2 FEATURES
-            n_informative = 2,
+            n_informative = n_features,
             n_redundant = 0
         )
 

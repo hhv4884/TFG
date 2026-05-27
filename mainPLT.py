@@ -140,18 +140,18 @@ def plot_all_moons():
 
 def plot_all_classification():
     hidden_sizes = [32, 64, 128]
-    noises = [0.0, 0.05, 0.1, 0.3]
+    noises = [0.5, 1.0, 2.0]
     inputs = [2, 784]
 
     for input_n in inputs:
         for size in hidden_sizes:
             for noise in noises:
 
-                base_w = f"results/synthetic_datasets/case_classification_{input_n}_version/w_es/dim_{size}/noise_{noise}"
-                base_wo = f"results/synthetic_datasets/case_classification_{input_n}_version/wo_es/dim_{size}/noise_{noise}"
+                base_w = f"results/synthetic_datasets/case_classification_{input_n}_version/w_es/dim_{size}/class_sep_{noise}"
+                base_wo = f"results/synthetic_datasets/case_classification_{input_n}_version/wo_es/dim_{size}/class_sep_{noise}"
 
-                save_dir = f"figures/synthetic_datasets/case_classification_{input_n}_version/dim_{size}/noise_{noise}"
-                title = f"Classification ({input_n}) | dim={size} | noise={noise}"
+                save_dir = f"figures/synthetic_datasets/case_classification_{input_n}_version/dim_{size}/class_sep_{noise}"
+                title = f"Classification ({input_n}) | dim={size} | class_sep={noise}"
 
                 plot_case_w_vs_wo(base_w, base_wo, title, save_dir)
 
@@ -159,14 +159,14 @@ if __name__ == "__main__":
 
     print("\n===== GENERATING SYNTHETIC PLOTS =====")
 
-    print("\n--- LINEAR ---")
-    plot_all_linear()
+    # print("\n--- LINEAR ---")
+    # plot_all_linear()
 
-    print("\n--- RADIAL ---")
-    plot_all_radial()
+    # print("\n--- RADIAL ---")
+    # plot_all_radial()
 
-    print("\n--- MOONS ---")
-    plot_all_moons()
+    # print("\n--- MOONS ---")
+    # plot_all_moons()
 
     print("\n--- CLASSIFICATION ---")
     plot_all_classification()

@@ -194,28 +194,27 @@ def train_case_moons():
 def train_case_classification_784_version():
     print("TRAINING MODEL -> Case - classification")
     hidden_sizes = [32, 64, 128]
-    noises = [0.0, 0.05, 0.1, 0.3]
+    class_sep = [2.0, 1.0, 0.5]
     early_stop = None
     inicializations = 15
     m_samples = 14000
     input_n = 784
     for size in hidden_sizes:
         for i in range(inicializations):
-            for noise in noises:
-                print(f"dim {size}, init {i}, noise {noise}, train_case_classification_784_version")
+            for sep in class_sep:
+                print(f"dim {size}, init {i}, class_sep {sep}, train_case_classification_784_version")
                 train_loader, test_loader = load_base(
                     task="classification",
                     n_samples=m_samples,
-                    cluster_number=None,
-                    noise=noise,
+                    class_sep=sep,
                     batch_size=128,
                     n_features=input_n
                 )
                 for early_stop in [True, False]:
                     if early_stop:
-                        path = f"training/synthetic_datasets/case_classification_784_version/w_es/dim_{size}/noise_{noise}/i_{i}"
+                        path = f"training/synthetic_datasets/case_classification_784_version/w_es/dim_{size}/class_sep_{sep}/i_{i}"
                     else:
-                        path = f"training/synthetic_datasets/case_classification_784_version/wo_es/dim_{size}/noise_{noise}/i_{i}"
+                        path = f"training/synthetic_datasets/case_classification_784_version/wo_es/dim_{size}/class_sep_{sep}/i_{i}"
                     model = MLP_superior(input_n, [size], 2)
                     model.to(device)
                     if early_stop:
@@ -228,28 +227,27 @@ def train_case_classification_784_version():
 def train_case_classification_2_version():
     print("TRAINING MODEL -> Case - classification")
     hidden_sizes = [32, 64, 128]
-    noises = [0.0, 0.05, 0.1, 0.3]
+    class_sep = [0.5, 1.0, 2.0]
     early_stop = None
     inicializations = 15
     m_samples = 14000
     input_n = 2
     for size in hidden_sizes:
         for i in range(inicializations):
-            for noise in noises:
-                print(f"dim {size}, init {i}, noise {noise}, train_case_classification_784_version")
+            for sep in class_sep:
+                print(f"dim {size}, init {i}, sep {sep}, train_case_classification_784_version")
                 train_loader, test_loader = load_base(
                     task="classification",
                     n_samples=m_samples,
-                    cluster_number=None,
-                    noise=noise,
+                    class_sep=sep,
                     batch_size=128,
                     n_features=input_n
                 )
                 for early_stop in [True, False]:
                     if early_stop:
-                        path = f"training/synthetic_datasets/case_classification_2_version/w_es/dim_{size}/noise_{noise}/i_{i}"
+                        path = f"training/synthetic_datasets/case_classification_2_version/w_es/dim_{size}/class_sep_{sep}/i_{i}"
                     else:
-                        path = f"training/synthetic_datasets/case_classification_2_version/wo_es/dim_{size}/noise_{noise}/i_{i}"
+                        path = f"training/synthetic_datasets/case_classification_2_version/wo_es/dim_{size}/class_sep_{sep}/i_{i}"
                     model = MLP_superior(input_n, [size], 2)
                     model.to(device)
                     if early_stop:
@@ -262,11 +260,11 @@ def train_case_classification_2_version():
 if __name__ == '__main__':
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f'Hello! Using {device} device :)')
-    train_mnist()
-    train_fashion_mnist()
-    train_case_linear_784_version()
-    train_case_linear_2_version()
-    train_case_radial()
-    train_case_moons()
+    # train_mnist()
+    # train_fashion_mnist()
+    # train_case_linear_784_version()
+    # train_case_linear_2_version()
+    # train_case_radial()
+    # train_case_moons()
     train_case_classification_784_version()
     train_case_classification_2_version()

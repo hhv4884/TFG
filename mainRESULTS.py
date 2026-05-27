@@ -279,17 +279,17 @@ def case_moons():
             save_moons_results(inicializations, i, j)
 
 def save_classification_results(inicializations, input_n, hidden_size, noise):
-    print(f"\n=== RUNNING RESULTS (dim={hidden_size}, noise={noise}) ===")
+    print(f"\n=== RUNNING RESULTS (dim={hidden_size}, class_sep={noise}) ===")
     dfs_wo = []
     dfs_w = []
     for i in range(inicializations):
         print(f"Inicialization = {i}")
         if (input_n == 784):
-            path_w = f"training/synthetic_datasets/case_classification_784_version/w_es/dim_{hidden_size}/noise_{noise}"
-            path_wo = f"training/synthetic_datasets/case_classification_784_version/wo_es/dim_{hidden_size}/noise_{noise}"
+            path_w = f"training/synthetic_datasets/case_classification_784_version/w_es/dim_{hidden_size}/class_sep_{noise}"
+            path_wo = f"training/synthetic_datasets/case_classification_784_version/wo_es/dim_{hidden_size}/class_sep_{noise}"
         else:
-            path_w = f"training/synthetic_datasets/case_classification_2_version/w_es/dim_{hidden_size}/noise_{noise}"
-            path_wo = f"training/synthetic_datasets/case_classification_2_version/wo_es/dim_{hidden_size}/noise_{noise}"
+            path_w = f"training/synthetic_datasets/case_classification_2_version/w_es/dim_{hidden_size}/class_sep_{noise}"
+            path_wo = f"training/synthetic_datasets/case_classification_2_version/wo_es/dim_{hidden_size}/class_sep_{noise}"
         og_path = Path(__file__).parent
         final_path_w = og_path/path_w/f"i_{i}"/ "results_log.csv"
         final_path_wo = og_path/path_wo/f"i_{i}"/ "results_log.csv"
@@ -315,13 +315,13 @@ def save_classification_results(inicializations, input_n, hidden_size, noise):
     df_p25_wo = df_total_wo.groupby("fraction").quantile(0.25, numeric_only=True)
     df_p75_wo = df_total_wo.groupby("fraction").quantile(0.75, numeric_only=True)
 
-    base_w = Path(f"results/synthetic_datasets/case_classification_{input_n}_version/w_es/dim_{hidden_size}/noise_{noise}")
+    base_w = Path(f"results/synthetic_datasets/case_classification_{input_n}_version/w_es/dim_{hidden_size}/class_sep_{noise}")
     base_w.mkdir(parents=True, exist_ok=True)
     df_median_w.to_csv(base_w / "median_results.csv")
     df_p25_w.to_csv(base_w / "p25_results.csv")
     df_p75_w.to_csv(base_w / "p75_results.csv")
 
-    base_wo = Path(f"results/synthetic_datasets/case_classification_{input_n}_version/wo_es/dim_{hidden_size}/noise_{noise}")
+    base_wo = Path(f"results/synthetic_datasets/case_classification_{input_n}_version/wo_es/dim_{hidden_size}/class_sep_{noise}")
     base_wo.mkdir(parents=True, exist_ok=True)
     df_median_wo.to_csv(base_wo / "median_results.csv")
     df_p25_wo.to_csv(base_wo / "p25_results.csv")
@@ -329,19 +329,18 @@ def save_classification_results(inicializations, input_n, hidden_size, noise):
 
 def case_classification():
     hidden_sizes = [32, 64, 128]
-    noise = [0.0, 0.05, 0.1, 0.3]
+    class_sep = [2.0, 1.0, 0.5]
     inicializations = 15
-    # inputs = [784, 2]
-    inputs = [2]
+    inputs = [784, 2]
     for i in hidden_sizes:
-        for j in noise:
+        for j in class_sep:
             for input_n in inputs:
                 save_classification_results(inicializations, input_n, i, j)
 
 if __name__ == "__main__":
-    case_linear()
-    case_radial()
-    case_moons()
+    # case_linear()
+    # case_radial()
+    # case_moons()
     case_classification()
-    case_mnist()
-    case_fashion_mnist()
+    # case_mnist()
+    # case_fashion_mnist()
